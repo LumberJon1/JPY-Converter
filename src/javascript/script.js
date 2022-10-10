@@ -1,4 +1,7 @@
 // element definitions
+const dateHeadingEl = document.querySelector("#date-heading");
+const currentTimeEl = document.querySelector("#current-timestamp");
+const timestampEl = document.querySelector("#timestamp");
 const exchangeFormEl = document.querySelector("#exchange-form");
 const usdTextEl = document.querySelector("#usd-text");
 const jpyTextEl = document.querySelector("#jpy-text");
@@ -11,8 +14,109 @@ let toUSD = true;
 // Current exchange rate (expressed in USD:JPY. Use reciprocal for JPY:USD.)
 let exchangeRate = 2;
 
+// Script to convert unix time to readable format
+const populateTime = (type="timestamp") => {
+
+    let date = new Date(Date.now());
+    let month = date.getMonth();
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
+    // Format month
+    switch(month) {
+        case 0:
+            month = "January";
+            console.log(month);
+            break;
+        case 1:
+            month = "February";
+            console.log(month);
+            break;
+        case 2:
+            month = "March";
+            console.log(month);
+            break;
+        case 3:
+            month = "April";
+            console.log(month);
+            break;
+        case 4:
+            month = "May";
+            console.log(month);
+            break;
+        case 5:
+            month = "June";
+            console.log(month);
+            break;
+        case 6:
+            month = "July";
+            console.log(month);
+            break;
+        case 7:
+            month = "August";
+            console.log(month);
+            break;
+        case 8:
+            month = "September";
+            console.log(month);
+            break;
+        case 9:
+            month = "October";
+            console.log(month);
+            break;
+        case 10:
+            month = "November";
+            console.log(month);
+            break;
+        case 11:
+            month = "December";
+            console.log(month);
+            break;
+    }
+
+    switch(day) {
+        case 1:
+        case 21:
+        case 31:
+            day = day+"st";
+            break;
+        case 2:
+        case 22:
+            day = day+"nd";
+            break;
+        case 3:
+        case 23:
+            day = day+"rd";
+            break;
+        default:
+            day = day+"th";
+    }
+
+    let dateHeading = `${month} ${day}, ${year}`;
+    let currentTime = `Current time: ${hour}:${minute} (Local)`;
+    let timestamp = `${month} ${day}, ${year} at ${hour}:${minute}`
+
+    if (type == "dateHeading") {
+        return dateHeading;
+    }
+    else if (type == "currentTime") {
+        return currentTime;
+    }
+    else if (type == "timeStamp") {
+        return timestamp;
+    }
+    else {
+        console.log("Invalid parameter for function.");
+    }
+}
+
+
+// TODO: If we cannot pull the data from online, display the last known exchange rate from localStorage
+
 // Script to pull exchange rate data and store in localStorage
-// If we cannot pull the data from online, display the last known exchange rate from localStorage
+// Exchange rate data courtesy of exchangerate.host API
 const callExchangeRate = () => {
 
     // if (toUSD === true) {
@@ -35,10 +139,12 @@ const callExchangeRate = () => {
 
       // Set exchange rate to the result of the API query
       exchangeRate = response.result;
+
+      // Set the timestamp for the header
+      timestampEl.textContent = populateTime("timeStamp");
+
     }
 }
-
-// Script to convert unix time to readable format
 
 // Script to calculate either the JPY:USD or USD:JPY depending on which text box the user selected,
 // and display it to the result div
@@ -68,7 +174,6 @@ const calculateCost = () => {
         displayEl.textContent = result;
         
     }
-    // Clear the inputs
 }
 
 
@@ -93,5 +198,9 @@ exchangeFormEl.addEventListener("submit", function(event) {
     usdTextEl.value = "";
     jpyTextEl.value = "";
 });
+
+// Assign the date and time on load
+dateHeadingEl.textContent = populateTime("dateHeading");
+currentTimeEl.textContent = populateTime("currentTime");
 
 callExchangeRate();
