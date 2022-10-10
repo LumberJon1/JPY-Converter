@@ -13,6 +13,30 @@ let exchangeRate = 2;
 
 // Script to pull exchange rate data and store in localStorage
 // If we cannot pull the data from online, display the last known exchange rate from localStorage
+const callExchangeRate = () => {
+
+    // if (toUSD === true) {
+    //     from = "JPY";
+    //     to = "USD";
+    // }
+    // else {
+    //     from = "USD";
+    //     to = "JPY";
+    // }
+
+    const requestURL = `https://api.exchangerate.host/convert?from=USD&to=JPY&places=6`;
+    let request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    
+    request.onload = function() {
+      let response = request.response;
+
+      // Set exchange rate to the result of the API query
+      exchangeRate = response.result;
+    }
+}
 
 // Script to convert unix time to readable format
 
@@ -69,3 +93,5 @@ exchangeFormEl.addEventListener("submit", function(event) {
     usdTextEl.value = "";
     jpyTextEl.value = "";
 });
+
+callExchangeRate();
