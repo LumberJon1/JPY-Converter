@@ -27,7 +27,7 @@
     </header>
     <body class="bg-slate-900 text-cyan-100 h-full">
         <section id="output-section" class="flex flex-col justify-center items-center">
-            <div class="my-10 flex items-center justify-center text-xl">
+            <div id="display" class="my-10 flex items-center justify-center text-xl">
                 Displayed Result
             </div>
         </section>
@@ -35,14 +35,14 @@
             <div class="flex w-full justify-evenly items-center">
                 <div class="my-5 p-2 border border-cyan-900 flex items-center justify-center">
                     <p class="mr-2 text-xl">$</p>
-                    <input type="text" placeholder="USD" class="w-3/4 rounded p-2 text-center">
+                    <input id="usd-text" type="text" placeholder="USD" class="w-3/4 rounded p-2 text-center">
                 </div>
                 <div class="my-5 p-2 border border-cyan-900 flex items-center justify-center">
                     <p class="mr-2 text-xl">&yen;</p>
-                    <input type="text" placeholder="JPY" class="w-3/4 rounded p-2 text-center">
+                    <input id="jpy-text" type="text" placeholder="JPY" class="w-3/4 rounded p-2 text-center">
                 </div>
             </div>
-            <button class="my-5 p-2 border-2 border-cyan-900 rounded">Calculate</button>
+            <button id="calculate" class="my-5 p-2 border-2 border-cyan-900 rounded">Calculate</button>
         </section>
         <script src="../src/javascript/script.js"></script>
     </body>
