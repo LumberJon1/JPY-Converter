@@ -143,8 +143,11 @@ const callExchangeRate = () => {
         // Break out of the function and initiate a localStorage request if the rsponse != 200
         if (responseStatus != 200) {
             console.log("No current exchange rate data available.  Pulling from local storage...");
-            exchangeRate = localStorage.getItem("");
-            timestampEl.textContent = localStorage.getItem("");
+            exchangeRate = JSON.parse(localStorage.getItem("exchangeRate"));
+            timestampEl.textContent = JSON.parse(localStorage.getItem("timeStamp"));
+            console.log("\nPulled the following from localStorage...\n");
+            console.log(JSON.parse(localStorage.getItem("exchangeRate")));
+            console.log(JSON.parse(localStorage.getItem("timeStamp")));
         }
         else {
 
@@ -157,7 +160,10 @@ const callExchangeRate = () => {
             timestampEl.textContent = timestamp;
 
             // Set localStorage entry with the updated exchange rate
-            
+            localStorage.setItem("exchangeRate", JSON.stringify(exchangeRate));
+            console.log("Set localStorage entry for exchangeRate to "+JSON.stringify(exchangeRate));
+            localStorage.setItem("timeStamp", JSON.stringify(timestamp));
+            console.log("Set localStorage entry for timeStamp to "+JSON.stringify(timestamp));
         }
     }
 }
