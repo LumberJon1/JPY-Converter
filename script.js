@@ -135,14 +135,30 @@ const callExchangeRate = () => {
     request.send();
     
     request.onload = function() {
-      let response = request.response;
 
-      // Set exchange rate to the result of the API query
-      exchangeRate = response.result;
+        // Capture HTTP response status
+        let responseStatus = request.status;
+        console.log(responseStatus);
 
-      // Set the timestamp for the header
-      timestampEl.textContent = populateTime("timeStamp");
+        // Break out of the function and initiate a localStorage request if the rsponse != 200
+        if (responseStatus != 200) {
+            console.log("No current exchange rate data available.  Pulling from local storage...");
+            exchangeRate = localStorage.getItem("");
+            timestampEl.textContent = localStorage.getItem("");
+        }
+        else {
 
+            let response = request.response;
+            // Set exchange rate to the result of the API query
+            exchangeRate = response.result;
+      
+            // Set the timestamp for the header
+            let timestamp = populateTime("timeStamp");
+            timestampEl.textContent = timestamp;
+
+            // Set localStorage entry with the updated exchange rate
+            
+        }
     }
 }
 
