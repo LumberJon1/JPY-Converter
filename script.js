@@ -28,51 +28,39 @@ const populateTime = (type="timestamp") => {
     switch(month) {
         case 0:
             month = "January";
-            console.log(month);
             break;
         case 1:
             month = "February";
-            console.log(month);
             break;
         case 2:
             month = "March";
-            console.log(month);
             break;
         case 3:
             month = "April";
-            console.log(month);
             break;
         case 4:
             month = "May";
-            console.log(month);
             break;
         case 5:
             month = "June";
-            console.log(month);
             break;
         case 6:
             month = "July";
-            console.log(month);
             break;
         case 7:
             month = "August";
-            console.log(month);
             break;
         case 8:
             month = "September";
-            console.log(month);
             break;
         case 9:
             month = "October";
-            console.log(month);
             break;
         case 10:
             month = "November";
-            console.log(month);
             break;
         case 11:
             month = "December";
-            console.log(month);
             break;
     }
 
@@ -113,20 +101,9 @@ const populateTime = (type="timestamp") => {
 }
 
 
-// TODO: If we cannot pull the data from online, display the last known exchange rate from localStorage
-
 // Script to pull exchange rate data and store in localStorage
 // Exchange rate data courtesy of exchangerate.host API
 const callExchangeRate = () => {
-
-    // if (toUSD === true) {
-    //     from = "JPY";
-    //     to = "USD";
-    // }
-    // else {
-    //     from = "USD";
-    //     to = "JPY";
-    // }
 
     const requestURL = `https://api.exchangerate.host/convert?from=USD&to=JPY&places=6`;
     let request = new XMLHttpRequest();

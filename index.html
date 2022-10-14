@@ -42,7 +42,17 @@
                 <button id="calculate" type="submit" class="my-5 p-2 border-2 border-cyan-900 rounded">Calculate</button>
             </form>
         </section>
-        <script src="./script.js"></script>
     </body>
+    <script src="./script.js"></script>
+    <script>
+        (function() {
+            console.log(navigator);
+            if ("ServiceWorker" in navigator) {
+                navigator.serviceWorker.register("./service-worker.js")
+                .then(()=> console.log("Service worker registered successfully."))
+                .catch(error => console.log("Service worker registration failed.", error))
+            }
+        })();
+    </script>
 </main>
 </html>
