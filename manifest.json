@@ -456,7 +456,7 @@
           "sizes": "1024x1024"
         }
       ],
-    "start_url": "",
-    "display": "",
-    "prefer_related_applications": ""
+    "start_url": "./index.html/",
+    "display": "fullscreen",
+    "prefer_related_applications": "false"
 }
