@@ -1,0 +1,12 @@
+{
+    "name": "JPY Pocket Currency Converter",
+    "short_name": "JPY Converter",
+    "description": "A pocket travel app that converts prices from Japanese Yen to US Dollars for quick and easy price comparisons while traveling in Japan",
+    "background_color": "#062B5E",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            
+        }
+    ]
+}
