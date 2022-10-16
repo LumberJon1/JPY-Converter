@@ -7,6 +7,8 @@ const usdTextEl = document.querySelector("#usd-text");
 const jpyTextEl = document.querySelector("#jpy-text");
 const calculateButtonEl = document.querySelector("#calculate");
 const displayEl = document.querySelector("#display");
+const comparisonEl = document.querySelector("#comparison-display");
+const exchangeRateEl = document.querySelector("#exch-display");
 
 // Switch to tell what to calculate
 let toUSD = true;
@@ -119,12 +121,8 @@ const callExchangeRate = () => {
 
         // Break out of the function and initiate a localStorage request if the rsponse != 200
         if (responseStatus != 200) {
-            console.log("No current exchange rate data available.  Pulling from local storage...");
             exchangeRate = JSON.parse(localStorage.getItem("exchangeRate"));
             timestampEl.textContent = JSON.parse(localStorage.getItem("timeStamp"));
-            console.log("\nPulled the following from localStorage...\n");
-            console.log(JSON.parse(localStorage.getItem("exchangeRate")));
-            console.log(JSON.parse(localStorage.getItem("timeStamp")));
         }
         else {
 
@@ -138,40 +136,62 @@ const callExchangeRate = () => {
 
             // Set localStorage entry with the updated exchange rate
             localStorage.setItem("exchangeRate", JSON.stringify(exchangeRate));
-            console.log("Set localStorage entry for exchangeRate to "+JSON.stringify(exchangeRate));
             localStorage.setItem("timeStamp", JSON.stringify(timestamp));
-            console.log("Set localStorage entry for timeStamp to "+JSON.stringify(timestamp));
+
+            // Display the exchange rate
+            exchangeRateEl.textContent = "$1:"+exchangeRate.toFixed(2);
         }
     }
 }
 
+
 // Script to calculate either the JPY:USD or USD:JPY depending on which text box the user selected,
 // and display it to the result div
 const calculateCost = () => {
-    console.log("Calculating cost of item...");
+    
     // Check whether toUSD is false
     if (toUSD === false) {
-        let formatter = new Intl.NumberFormat("en-us", {
+        let jpyFormatter = new Intl.NumberFormat("en-us", {
             style: "currency",
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
             currency: "JPY"
         });
-        let result = parseFloat(usdTextEl.value.trim());
-        result = formatter.format(result * exchangeRate);
-        displayEl.textContent = result;
-    }
-    else if (toUSD === true) {
-        let formatter = new Intl.NumberFormat("en-us", {
+        let usdFormatter = new Intl.NumberFormat("en-us", {
             style: "currency",
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
             currency: "USD"
         });
-        let result = parseFloat(jpyTextEl.value.trim());
-        result = formatter.format(result * (1 / exchangeRate));
+        let result = parseFloat(usdTextEl.value.trim());
+        // Display the original amount for comparison
+        comparisonEl.textContent = usdFormatter.format(result);
+        
+        // Calculate the converted amount
+        result = jpyFormatter.format(result * exchangeRate);
         displayEl.textContent = result;
         
+    }
+    else if (toUSD === true) {
+        let usdFormatter = new Intl.NumberFormat("en-us", {
+            style: "currency",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+            currency: "USD"
+        });
+        let jpyFormatter = new Intl.NumberFormat("en-us", {
+            style: "currency",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+            currency: "JPY"
+        });
+        let result = parseFloat(jpyTextEl.value.trim());
+        // Display the original amount for comparison
+        comparisonEl.textContent = jpyFormatter.format(result);
+
+        // Calculate the converted amount
+        result = usdFormatter.format(result * (1 / exchangeRate));
+        displayEl.textContent = result;
     }
 }
 
@@ -181,12 +201,10 @@ const calculateCost = () => {
 // Set calculation mode on user click into JPY or USD box
 usdTextEl.addEventListener("click", () => {
     toUSD = false;
-    console.log("Converting from USD to JPY.")
 });
 
 jpyTextEl.addEventListener("click", () => {
     toUSD = true;
-    console.log("Converting from JPY to USD.")
 });
 
 // Run calculation on click of calculate button

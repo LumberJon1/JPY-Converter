@@ -1,7 +1,9 @@
 // Define files to cache
 const FILES_TO_CACHE = [
     "./index.html",
-    "./script.js"
+    "./script.js",
+    "./manifest.json",
+    // TODO: Cache the image files
 ];
 
 // Other global constants
